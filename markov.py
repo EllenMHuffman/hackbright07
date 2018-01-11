@@ -101,7 +101,7 @@ def make_text(chains, n):
 
     word_string = " ".join(words)
 
-    return word_string[:280]
+    return word_string[:140]
 
 if __name__ == '__main__':
     input_path = argv[1]

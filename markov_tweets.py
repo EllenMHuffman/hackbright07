@@ -12,25 +12,32 @@ api = twitter.Api(
 
 # print api.VerifyCredentials()
 
-input_path = argv[1]
+def first_tweet():
+    input_path = argv[1]
 
-# Open the file and turn it into one long string
-input_text = markov.open_and_read_file(input_path)
+    # Open the file and turn it into one long string
+    input_text = markov.open_and_read_file(input_path)
 
-# Get a Markov chain
-chains = markov.make_chains(input_text, int(argv[2]))
+    # Get a Markov chain
+    chains = markov.make_chains(input_text, int(argv[2]))
 
-new_tweet = markov.make_text(chains, int(argv[2]))
-api.PostUpdate(new_tweet)
-print new_tweet
+    new_tweet = markov.make_text(chains, int(argv[2]))
+    api.PostUpdate(new_tweet)
+    print new_tweet
+    return chains
 
-while True:
+
+def repeat_tweet(chains):
+    """"""
     response = raw_input('Enter to tweet again (q to quit): ')
     if response == '':
         next_tweet = markov.make_text(chains, int(argv[2]))
         api.PostUpdate(next_tweet)
         print next_tweet
+        repeat_tweet(chains)
     else:
-        break
+        pass
 
+chains = first_tweet()
+repeat_tweet(chains)
 # print status.text
